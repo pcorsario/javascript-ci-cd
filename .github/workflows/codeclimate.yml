@@ -1,18 +1,17 @@
 name: Code Climate Analysis
-run-name: Analisis del code
+run-name: Analisis del código
 on:
   push:
     branches:
       - main
 jobs:
-    analysis: 
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3 
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-        - name: Run Code Climate Analysis
-          uses: codeclimate/codeclimate-action@v2.6.0
-          with:
-           token: ${{ secrets.CODECLIMATE_TOKEN }}
-       
+      - name: Run Code Climate Analysis
+        uses: codeclimate/codeclimate-action@v2.6.0
+        with:
+          token: ${{ secrets.CODECLIMATE_TOKEN }}
