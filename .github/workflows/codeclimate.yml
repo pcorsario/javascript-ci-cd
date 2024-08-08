@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   analysis:
     runs-on: ubuntu-latest
@@ -11,7 +12,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Code Climate Test Reporter
+        run: |
+          curl -L https://github.com/codeclimate/test-reporter/releases/latest/download/test-reporter-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          
       - name: Run Code Climate Analysis
-        uses: codeclimate/codeclimate-action@v2.6.0
-        with:
-          token: ${{ secrets.CODECLIMATE_TOKEN }}
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
+        run: |
+          ./cc-test-reporter before-build
+          # Aquí deberías agregar el comando para ejecutar tus pruebas
+          ./cc-test-reporter after-build --exit-code $?
